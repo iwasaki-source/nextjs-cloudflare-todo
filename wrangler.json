@@ -13,7 +13,8 @@
     {
       "binding": "DB",
       "database_name": "d1-todo-app",
-      "database_id": "2d75238a-d4b8-4130-a61b-47c269afb416"
+      "database_id": "d08cfa5b-6df6-4ab7-af30-9b14ecfb24ad",
+      "migrations_dir": "src/drizzle/migrations"
     }
   ]
 }
