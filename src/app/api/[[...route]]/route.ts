@@ -1,5 +1,8 @@
+import { drizzle } from 'drizzle-orm/d1';
+import { eq } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
+import { todos } from '@/drizzle/schema';
 
 type Bindings = {
   DB: D1Database;
@@ -11,36 +14,33 @@ const app = new Hono<{ Bindings: Bindings }>().basePath('/api');
 
 // 1件取得
 app.get('/todos/:id', async (c) => {
-  const id = c.req.param('id');
+  const db = drizzle(process.env.DB);
+  const id = parseInt(c.req.param('id'));
   try {
-    const { results } = await process.env.DB.prepare(
-      'SELECT * FROM todos WHERE id = ?;'
-    ).bind(id).all()
-    return c.json(results);
-  } catch (e) {
-    return c.json({ err: e }, 500);
+    const res = await db.select().from(todos).where(eq(todos.id, id));
+    return c.json(res);
+  } catch (error) {
+    return c.json({ error: error }, 500);
   }
 })
 
 // 全件取得
 app.get('/todos', async (c) => {
+  const db = drizzle(process.env.DB);
   try {
-    const { results } = await process.env.DB.prepare(
-      'SELECT * FROM todos;'
-    ).all()
-    return c.json(results);
-  } catch (e) {
-    return c.json({ err: e }, 500);
+    const res = await db.select().from(todos);
+    return c.json(res);
+  } catch (error) {
+    return c.json({ error: error }, 500);
   }
 })
 
 // 1件削除
 app.delete('/todos/:id', async (c) => {
-  const id = c.req.param('id');
+  const db = drizzle(process.env.DB);
+  const id = parseInt(c.req.param('id'));
   try {
-    await process.env.DB.prepare(
-      'DELETE FROM todos WHERE id = ?;'
-    ).bind(id).run();
+    await db.delete(todos).where(eq(todos.id, id));
     return c.json({ message: 'Deleted' }, 200);
   } catch (e) {
     return c.json({ err: e }, 500);
@@ -49,11 +49,14 @@ app.delete('/todos/:id', async (c) => {
 
 // 新規登録
 app.post('/todos', async (c) => {
-  const { title, content } = await c.req.json();
+  const db = drizzle(process.env.DB);
+  const { title, description, completed } = await c.req.json();
   try {
-    await process.env.DB.prepare(
-      'INSERT INTO todos (title, content) VALUES (?, ?);'
-    ).bind(title, content).run();
+    await db.insert(todos).values({
+      title,
+      description,
+      completed,
+    })
     return c.json({ message: 'Created' }, 200);
   } catch (e) {
     return c.json({ err: e }, 500);
@@ -62,12 +65,16 @@ app.post('/todos', async (c) => {
 
 // 更新
 app.put('/todos/:id', async (c) => {
-  const id = c.req.param('id');
-  const { title, content } = await c.req.json();
+  const db = drizzle(process.env.DB);
+  const id = parseInt(c.req.param('id'));
+  const { title, description, completed } = await c.req.json();
   try {
-    await process.env.DB.prepare(
-      'UPDATE todos SET title = ?, content = ? WHERE id = ?;'
-    ).bind(title, content, id).run();
+    await db.update(todos).set({
+      title,
+      description,
+      completed,
+    }).where(eq(todos.id, id));
+    return c.json({ message: 'Updated' }, 200);
   } catch (e) {
     return c.json({ err: e }, 500);
   }
