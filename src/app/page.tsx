@@ -1,5 +1,5 @@
 import TodoList from '@/components/todo/todo-list';
-import { getTodos } from '@/utils/api';
+import { getTodos } from '@/app/action';
 import Link from 'next/link';
 
 export default async function Home() {

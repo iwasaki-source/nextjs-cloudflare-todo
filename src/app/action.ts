@@ -1,7 +1,15 @@
 'use server'
 
 import { redirect } from "next/navigation";
-import { CreateTodo } from "@/types/todo";
+import { CreateTodo, Todo } from "@/types/todo";
+
+export async function getTodos(): Promise<Todo[]> {
+  const res = await fetch(`${process.env.API_URL}/api/todos`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+}
 
 export async function createTodo({
   title,
