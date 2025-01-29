@@ -25,3 +25,18 @@ export async function createTodo({
   });
   redirect('/');
 }
+
+export async function deleteTodo(id: number) {
+  try {
+    const res = await fetch(`${process.env.API_URL}/api/todos/${id}`, {
+      method: 'DELETE',
+      next: { revalidate: 0 }
+    });
+    if (!res.ok) {
+      throw new Error('削除に失敗しました');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  redirect('/');
+};

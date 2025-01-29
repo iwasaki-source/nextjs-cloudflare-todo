@@ -1,4 +1,5 @@
-import type { Todo } from "@/types/todo"
+import type { Todo } from "@/types/todo";
+import TodoActions from "./todo-actions";
 
 export default function TodoCard({ todo }: { todo: Todo }) {
   const { title, description, created_at, completed } = todo;
@@ -21,8 +22,7 @@ export default function TodoCard({ todo }: { todo: Todo }) {
         <p>{description}</p>
         <div className="flex justify-end gap-4 mt-4">
           <time className="mr-auto self-end">{formattedDate}</time>
-          <a href="" className="bg-emerald-800 text-white px-4 py-2 rounded-md">編集</a>
-          <a href="" className="bg-rose-600 text-white px-4 py-2 rounded-md">削除</a>
+          <TodoActions todo={todo} />
         </div>
       </div>
     </div>
