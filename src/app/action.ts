@@ -1,13 +1,13 @@
 'use server'
 
 import { redirect } from "next/navigation";
+import { CreateTodo } from "@/types/todo";
 
-// import { TodoCreate } from "@/types/todo";
-
-export async function createTodo(formData: FormData) {
-  const title = formData.get('title');
-  const description = formData.get('description');
-  const completed = formData.get('completed');
+export async function createTodo({
+  title,
+  description,
+  completed
+}: CreateTodo) {
   await fetch(`${process.env.API_URL}/api/todos`, {
     method: 'POST',
     headers: {
