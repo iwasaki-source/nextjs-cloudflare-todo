@@ -5,3 +5,9 @@ export type Todo = {
   created_at: string;
   completed: boolean;
 };
+
+export type TodoCreate = {
+  title: string;
+  description: string;
+  completed: boolean;
+};
