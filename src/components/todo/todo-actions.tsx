@@ -6,7 +6,7 @@ import { deleteTodo } from "@/app/action";
 export default function TodoActions({ todo }: { todo: Todo }) {
   return (
     <div className="flex gap-x-4">
-      <a href=""
+      <a href={`/edit/${todo.id}`}
         className="bg-emerald-800 text-white px-4 py-2 rounded-md"
       >編集
       </a>

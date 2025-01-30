@@ -11,6 +11,14 @@ export async function getTodos(): Promise<Todo[]> {
   return res.json();
 }
 
+export async function getTodo(id: number): Promise<Todo> {
+  const res = await fetch(`${process.env.API_URL}/api/todos/${id}`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+}
+
 export async function createTodo({
   title,
   description,
