@@ -48,3 +48,14 @@ export async function deleteTodo(id: number) {
   }
   redirect('/');
 };
+
+export async function updateTodo(id: number, data: CreateTodo) {
+  await fetch(`${process.env.API_URL}/api/todos/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  });
+  redirect('/');
+}
