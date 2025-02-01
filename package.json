@@ -21,6 +21,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
+    "sanitize-html": "^2.14.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
