@@ -3,6 +3,9 @@ import TodoActions from "./todo-actions";
 
 export default function TodoCard({ todo }: { todo: Todo }) {
   const { title, description, created_at, completed } = todo;
+
+  if (!description) return null;
+
   const formattedDate = new Date(created_at).toLocaleDateString("ja-JP", {
     year: "numeric",
     month: "long",
@@ -19,7 +22,7 @@ export default function TodoCard({ todo }: { todo: Todo }) {
         )}
       </div>
       <div className="p-4 pb-0">
-        <p>{description}</p>
+        <div dangerouslySetInnerHTML={{ __html: description || '' }} />
         <div className="flex justify-end gap-4 mt-4">
           <time className="mr-auto self-end">{formattedDate}</time>
           <TodoActions todo={todo} />
