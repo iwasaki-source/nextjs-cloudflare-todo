@@ -21,9 +21,13 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "rehype-parse": "^9.0.1",
+    "rehype-remark": "^10.0.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "remark-stringify": "^11.0.0",
     "sanitize-html": "^2.14.0",
+    "unified": "^11.0.5",
     "zod": "^3.24.1"
   },
   "devDependencies": {
