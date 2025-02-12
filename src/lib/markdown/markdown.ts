@@ -4,6 +4,7 @@ import rehypeRemark from 'rehype-remark';
 import { remark } from 'remark';
 import html from 'remark-html';
 import remarkStringify from 'remark-stringify';
+// @ts-expect-error - sanitizeHtml doesn't have types yet
 import sanitizeHtml from 'sanitize-html';
 
 export async function convertMarkdownToHtml(markdown: string): Promise<string> {
