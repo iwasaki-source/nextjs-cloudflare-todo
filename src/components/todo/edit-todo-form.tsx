@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { updateTodo } from "@/app/action";
 import { createTodoSchema } from '@/lib/validation-schema/taskSchema';
 import { CreateTodo,  Todo } from '@/types/todo';
+import { convertHtmlToMarkdown } from '@/lib/markdown/markdown';
 
 export default function EditTodoForm({ todo }: { todo: Todo}) {
 
@@ -18,7 +19,7 @@ export default function EditTodoForm({ todo }: { todo: Todo}) {
     resolver: zodResolver(createTodoSchema),
     defaultValues: {
       title: title,
-      description: description,
+      description: convertHtmlToMarkdown(description),
       completed: completed
     }
   });
